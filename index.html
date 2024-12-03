@@ -7,55 +7,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Acceso</title>
     <!-- Agrega la biblioteca de Firebase -->
-    <script type="module">
-  // Importar módulos de Firebase
+   <script type="module">
+  // Importa las bibliotecas necesarias
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCQo336-gyarAFjxCCDjSiBkO0baBkA1Ew",
-  authDomain: "control-de-acceso-inteli-2dbfb.firebaseapp.com",
-  databaseURL: "https://control-de-acceso-inteli-2dbfb-default-rtdb.firebaseio.com",
-  projectId: "control-de-acceso-inteli-2dbfb",
-  storageBucket: "control-de-acceso-inteli-2dbfb.appspot.com",
-  messagingSenderId: "390485509324",
-  appId: "1:390485509324:web:6bd912ed162cc427d4ee69",
-  measurementId: "G-GX90N3NXYQ"
-};
+  // Configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCQo336-gyarAFjxCCDjSiBkO0baBkA1Ew",
+    authDomain: "control-de-acceso-inteli-2dbfb.firebaseapp.com",
+    databaseURL: "https://control-de-acceso-inteli-2dbfb-default-rtdb.firebaseio.com",
+    projectId: "control-de-acceso-inteli-2dbfb",
+    storageBucket: "control-de-acceso-inteli-2dbfb.appspot.com",
+    messagingSenderId: "390485509324",
+    appId: "1:390485509324:web:6bd912ed162cc427d4ee69",
+    measurementId: "G-GX90N3NXYQ"
+  };
 
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+  // Inicializa Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
 
-// Leer datos de REGISTRO_INGRESOS
-const datosRef = ref(database, "REGISTRO_INGRESOS");
+  // Leer datos de REGISTRO_INGRESOS
+  const datosRef = ref(database, "REGISTRO_INGRESOS");
 
-onValue(datosRef, (snapshot) => {
-  const datosContainer = document.getElementById("datos");
-  datosContainer.innerHTML = ""; // Limpia la tabla antes de agregar nuevas filas
+  onValue(datosRef, (snapshot) => {
+    const datosContainer = document.getElementById("datos");
+    datosContainer.innerHTML = ""; // Limpia la tabla antes de agregar nuevas filas
 
-  snapshot.forEach((childSnapshot) => {
-    const childData = childSnapshot.val();
-    const newRow = document.createElement("tr");
-    newRow.innerHTML = `
-      <td>${childData.NOMBRE}</td>
-      <td>${childData.APELLIDOPATERNO}</td>
-      <td>${childData.APELLIDOMATERNO}</td>
-      <td>${childData.CARRERA}</td>
-      <td>${childData.SEMESTRE}</td>
-      <td>${childData.NUMERODECONTROL}</td>
-      <td>${childData.DIA}</td>
-      <td>${childData.MES}</td>
-      <td>${childData.AÑO}</td>
-      <td>${childData.HORA_INGRESO}</td>
-      <td>${childData.MODULO}</td>
-      <td>${childData.MOVIMIENTO}</td>
-    `;
-    datosContainer.appendChild(newRow);
+    snapshot.forEach((childSnapshot) => {
+      const childData = childSnapshot.val();
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `
+        <td>${childData.NOMBRE || "N/A"}</td>
+        <td>${childData.APELLIDOPATERNO || "N/A"}</td>
+        <td>${childData.APELLIDOMATERNO || "N/A"}</td>
+        <td>${childData.CARRERA || "N/A"}</td>
+        <td>${childData.SEMESTRE || "N/A"}</td>
+        <td>${childData.NUMERODECONTROL || "N/A"}</td>
+        <td>${childData.DIA || "N/A"}</td>
+        <td>${childData.MES || "N/A"}</td>
+        <td>${childData.AÑO || "N/A"}</td>
+        <td>${childData.HORA_INGRESO || "N/A"}</td>
+        <td>${childData.MODULO || "N/A"}</td>
+        <td>${childData.MOVIMIENTO || "N/A"}</td>
+      `;
+      datosContainer.appendChild(newRow);
+    });
   });
-});
-
 </script>
+
 
 
     <style>
