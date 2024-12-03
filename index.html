@@ -8,30 +8,30 @@
     <title>Control de Acceso</title>
     <!-- Agrega la biblioteca de Firebase -->
     <script type="module">
-       <!-- Agrega los scripts de Firebase desde el CDN -->
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
-<script>
+  // Importar módulos de Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
   // Configuración de Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCQo336-gyarAFjxCCDjSiBkO0baBkA1Ew",
     authDomain: "control-de-acceso-inteli-2dbfb.firebaseapp.com",
     databaseURL: "https://control-de-acceso-inteli-2dbfb-default-rtdb.firebaseio.com",
     projectId: "control-de-acceso-inteli-2dbfb",
-    storageBucket: "control-de-acceso-inteli-2dbfb.firebasestorage.app",
+    storageBucket: "control-de-acceso-inteli-2dbfb.appspot.com",
     messagingSenderId: "390485509324",
     appId: "1:390485509324:web:6bd912ed162cc427d4ee69",
     measurementId: "G-GX90N3NXYQ"
   };
 
   // Inicializar Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
 
   // Leer datos de la base de datos
-  const datosRef = database.ref('REGISTRO_INGRESOS');
+  const datosRef = ref(database, 'REGISTRO_INGRESOS');
 
-  datosRef.on('value', (snapshot) => {
+  onValue(datosRef, (snapshot) => {
     const datosContainer = document.getElementById('datos');
     datosContainer.innerHTML = ''; // Limpia la tabla antes de agregar nuevas filas
 
@@ -55,30 +55,8 @@
       datosContainer.appendChild(newRow);
     });
   });
-
-  // Leer datos de la base de datos "ALUMNOS"
-  const datosRef2 = database.ref('ALUMNOS');
-
-  datosRef2.on('value', (snapshot) => {
-    const datosContainer = document.getElementById('datos2');
-    datosContainer.innerHTML = ''; // Limpia la tabla antes de agregar nuevas filas
-
-    snapshot.forEach((childSnapshot) => {
-      const childData = childSnapshot.val();
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `
-        <td>${childData.NOMBRE}</td>
-        <td>${childData.APATERNO}</td>
-        <td>${childData.AMATERNO}</td>
-        <td>${childData.CARRERA}</td>
-        <td>${childData.SEMESTRE}</td>
-        <td>${childData.NCONTROL}</td>
-        <td>${childData.STATUS_INGRESO}</td>
-      `;
-      datosContainer.appendChild(newRow);
-    });
-  });
 </script>
+
 
     <style>
 
